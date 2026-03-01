@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design Tokens ─── */
+:root {
+  --bg: #fdf9ed;
+  --bg-card: #fefdf8;
+  --ink: #2c2c2c;
+  --ink-light: #5a5a5a;
+  --ink-muted: #8a8a8a;
+  --mint: #5eead4;
+  --mint-dark: #0d9488;
+  --mint-light: #ccfbef;
+  --border: #e2ddd0;
+  --border-mint: #99f6e0;
+  --shadow-soft: 0 2px 20px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ─── Paper Texture Background ─── */
+.paper-texture {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(94, 234, 212, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(250, 244, 225, 0.6) 0%, transparent 50%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(0, 0, 0, 0.015) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 79px,
+      rgba(0, 0, 0, 0.01) 80px
+    );
+}
+
+/* ─── Typography ─── */
+@layer base {
+  body {
+    @apply font-sans;
+    color: var(--ink);
+    background-color: var(--bg);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+    color: var(--ink);
+  }
+}
+
+/* ─── Component Classes ─── */
+@layer components {
+  .museum-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .museum-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+
+  .museum-input {
+    background-color: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: 0.5rem;
+    color: var(--ink);
+    padding: 0.5rem 1rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    font-family: var(--font-lato), system-ui, sans-serif;
+  }
+
+  .museum-input:focus {
+    border-color: var(--mint);
+    box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.15);
+  }
+
+  .museum-btn-primary {
+    background-color: var(--mint);
+    color: var(--ink);
+    border: 1.5px solid transparent;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .museum-btn-primary:hover {
+    background-color: var(--mint-dark);
+    color: white;
+    box-shadow: 0 2px 10px rgba(13, 148, 136, 0.25);
+  }
+
+  .museum-btn-outline {
+    background-color: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .museum-btn-outline:hover {
+    border-color: var(--mint);
+    background-color: var(--mint-light);
+  }
+
+  .tag-chip {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--mint-light);
+    color: var(--mint-dark);
+    border: 1px solid var(--border-mint);
+    border-radius: 9999px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .tag-chip:hover,
+  .tag-chip.active {
+    background-color: var(--mint);
+    border-color: var(--mint-dark);
+    color: var(--ink);
+  }
+
+  .section-title {
+    @apply font-serif text-2xl md:text-3xl;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+}

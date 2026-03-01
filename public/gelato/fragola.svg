@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <defs>
+    <radialGradient id="bgfragola" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#e85d7f" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#e85d7f" stop-opacity="1"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#bgfragola)"/>
+  <circle cx="200" cy="170" r="90" fill="rgba(255,255,255,0.12)"/>
+  <circle cx="200" cy="170" r="60" fill="rgba(255,255,255,0.08)"/>
+  <text x="200" y="295" font-family="Georgia, serif" font-size="20" text-anchor="middle" fill="rgba(0,0,0,0.6)" font-weight="bold">Fragola</text>
+  <text x="200" y="325" font-family="Georgia, serif" font-size="13" text-anchor="middle" fill="rgba(0,0,0,0.4)">Gelato Museum</text>
+  <text x="200" y="355" font-family="Georgia, serif" font-size="11" text-anchor="middle" fill="rgba(0,0,0,0.3)">Placeholder Image</text>
+</svg>
