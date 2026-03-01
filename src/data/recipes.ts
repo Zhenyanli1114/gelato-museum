@@ -19,7 +19,7 @@ export const recipes: Recipe[] = [
     name: "Pistachio di Bronte",
     shortDescription:
       "Made with prized Sicilian Bronte pistachios, this emerald jewel is richly nutty with a gentle sweetness that lingers.",
-    imagePath: "/gelato/pistachio-di-bronte.svg",
+    imagePath: "/gelato/pistachio-di-bronte.png",
     tags: ["nutty", "sicilian", "classic", "premium"],
     timeMin: 90,
     difficulty: "Medium",
@@ -48,7 +48,7 @@ export const recipes: Recipe[] = [
     name: "Stracciatella",
     shortDescription:
       "A creamy fior di latte base with fine ribbons of dark chocolate folded in — the original chocolate chip gelato.",
-    imagePath: "/gelato/stracciatella.svg",
+    imagePath: "/gelato/stracciatella.png",
     tags: ["chocolate", "classic", "crowd-pleaser", "roman"],
     timeMin: 75,
     difficulty: "Easy",
@@ -75,7 +75,7 @@ export const recipes: Recipe[] = [
     name: "Cioccolato Fondente",
     shortDescription:
       "Intensely dark and bittersweet, this is chocolate gelato for those who take their cacao seriously.",
-    imagePath: "/gelato/cioccolato-fondente.svg",
+    imagePath: "/gelato/cioccolato-fondente.png",
     tags: ["chocolate", "intense", "dark", "vegan-optional"],
     timeMin: 80,
     difficulty: "Medium",
@@ -103,7 +103,7 @@ export const recipes: Recipe[] = [
     name: "Tiramisù",
     shortDescription:
       "All the beloved flavors of the Italian classic — mascarpone, espresso, and ladyfinger — now in gelato form.",
-    imagePath: "/gelato/tiramisu.svg",
+    imagePath: "/gelato/tiramisu.png",
     tags: ["coffee", "mascarpone", "classic", "italian"],
     timeMin: 100,
     difficulty: "Hard",
@@ -134,7 +134,7 @@ export const recipes: Recipe[] = [
     name: "Fior di Latte",
     shortDescription:
       "The purest gelato: nothing but fresh whole milk, cream, and a whisper of sugar. The milk must be exceptional.",
-    imagePath: "/gelato/fior-di-latte.svg",
+    imagePath: "/gelato/fior-di-latte.png",
     tags: ["classic", "light", "pure", "milk"],
     timeMin: 60,
     difficulty: "Easy",
@@ -159,7 +159,7 @@ export const recipes: Recipe[] = [
     name: "Fragola (Strawberry)",
     shortDescription:
       "Captured at peak ripeness: a vibrant, fruit-forward gelato that tastes like summer in a scoop.",
-    imagePath: "/gelato/fragola.svg",
+    imagePath: "/gelato/fragola.png",
     tags: ["fruit", "summer", "fresh", "light"],
     timeMin: 50,
     difficulty: "Easy",
@@ -185,7 +185,7 @@ export const recipes: Recipe[] = [
     name: "Limone (Lemon Sorbetto)",
     shortDescription:
       "Bright, tart, and refreshing — this Sicilian-style lemon sorbetto is the palate cleanser of the gods.",
-    imagePath: "/gelato/limone.svg",
+    imagePath: "/gelato/limone.png",
     tags: ["citrus", "sorbet", "refreshing", "vegan", "summer"],
     timeMin: 45,
     difficulty: "Easy",
@@ -210,7 +210,7 @@ export const recipes: Recipe[] = [
     name: "Nocciola (Hazelnut)",
     shortDescription:
       "A deep, roasted hazelnut gelato that draws on Piedmont's finest hazelnuts — earthy, warm, and utterly irresistible.",
-    imagePath: "/gelato/nocciola.svg",
+    imagePath: "/gelato/nocciola.png",
     tags: ["nutty", "roasted", "rich", "classic", "piedmont"],
     timeMin: 90,
     difficulty: "Medium",
@@ -236,7 +236,7 @@ export const recipes: Recipe[] = [
     name: "Amarena",
     shortDescription:
       "Sour Amarena cherries preserved in syrup swirled through a creamy vanilla base — dramatic and delicious.",
-    imagePath: "/gelato/amarena.svg",
+    imagePath: "/gelato/amarena.png",
     tags: ["cherry", "fruity", "classic", "seasonal"],
     timeMin: 85,
     difficulty: "Medium",
@@ -263,7 +263,7 @@ export const recipes: Recipe[] = [
     name: "Caffè Espresso",
     shortDescription:
       "Bold, aromatic espresso concentrated into a silky gelato — a perfect mid-afternoon pick-me-up.",
-    imagePath: "/gelato/caffe-espresso.svg",
+    imagePath: "/gelato/caffe-espresso.png",
     tags: ["coffee", "bold", "italian", "afternoon"],
     timeMin: 75,
     difficulty: "Easy",
@@ -289,7 +289,7 @@ export const recipes: Recipe[] = [
     name: "Menta (Fresh Mint)",
     shortDescription:
       "Made with real steeped mint leaves — not artificial — this refreshingly cool gelato is the museum's signature.",
-    imagePath: "/gelato/menta.svg",
+    imagePath: "/gelato/menta.png",
     tags: ["mint", "fresh", "herbal", "refreshing", "summer"],
     timeMin: 90,
     difficulty: "Medium",
@@ -315,7 +315,7 @@ export const recipes: Recipe[] = [
     name: "Melone (Cantaloupe)",
     shortDescription:
       "Sunshine in a scoop: ripe cantaloupe blended into a light, fragrant sorbetto that sings of Italian summers.",
-    imagePath: "/gelato/melone.svg",
+    imagePath: "/gelato/melone.png",
     tags: ["fruit", "sorbet", "summer", "light", "vegan"],
     timeMin: 40,
     difficulty: "Easy",
