@@ -1,6 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+  const version = pathname.startsWith("/v2") ? "v2" : "v1";
+  const base = `/${version}`;
+
   return (
     <footer
       className="mt-auto py-10 px-4"
@@ -17,9 +24,9 @@ export default function Footer() {
         </div>
 
         <nav className="flex gap-6 text-sm" style={{ color: "var(--ink-light)" }}>
-          <Link href="/" className="hover:text-teal-600 transition-colors">Home</Link>
-          <Link href="/browse" className="hover:text-teal-600 transition-colors">Browse</Link>
-          <Link href="/ai-finder" className="hover:text-teal-600 transition-colors">AI Finder</Link>
+          <Link href={base} className="hover:text-teal-600 transition-colors">Home</Link>
+          <Link href={`${base}/browse`} className="hover:text-teal-600 transition-colors">Browse</Link>
+          <Link href={`${base}/ai-finder`} className="hover:text-teal-600 transition-colors">AI Finder</Link>
         </nav>
 
         <p className="text-xs" style={{ color: "var(--ink-muted)" }}>
