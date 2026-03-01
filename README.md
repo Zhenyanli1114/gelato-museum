@@ -18,7 +18,36 @@ A curated collection of authentic Italian gelato recipes — beautifully present
 - **TypeScript**
 - **Tailwind CSS**
 - **Google Fonts** — Playfair Display (serif) + Lato (sans-serif)
+- **OpenAI gpt-4o-mini** — powers the v2 AI Flavor Finder (falls back to rule-based if key is absent)
 - **localStorage** for reviews, ratings, and favorites (no backend needed)
+
+---
+
+## AI Flavor Finder — OpenAI Setup
+
+The v2 AI Finder (`/v2/ai-finder`) calls OpenAI server-side via `/api/ai-finder`.
+It **automatically falls back** to the rule-based matcher if no API key is configured.
+
+### Local development
+
+Add your key to `.env.local` (never committed — covered by `.gitignore`):
+
+```bash
+# .env.local
+OPENAI_API_KEY=sk-proj-...
+```
+
+### Vercel (production)
+
+1. Go to your project on [vercel.com](https://vercel.com)
+2. **Settings → Environment Variables**
+3. Add:
+   - **Name:** `OPENAI_API_KEY`
+   - **Value:** your OpenAI key
+   - **Environment:** Production (and Preview if you want)
+4. Redeploy — the next build will pick it up automatically.
+
+> **Security:** The key is read only in `src/app/api/ai-finder/route.ts` (server-side). It is never sent to the browser or included in client bundles.
 
 ---
 
