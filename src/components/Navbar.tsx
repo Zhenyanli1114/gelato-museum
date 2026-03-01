@@ -13,6 +13,7 @@ export default function Navbar() {
   const navLinks = [
     { href: base, label: "Home" },
     { href: `${base}/browse`, label: "Browse" },
+    ...(version === "v2" ? [{ href: `${base}/origins`, label: "Origins" }] : []),
     { href: `${base}/ai-finder`, label: "AI Finder" },
   ];
 
