@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { recipes } from "@/data/recipes";
 import { ALL_TAGS } from "@/data/recipes";
 import RecipeCard from "@/components/v2/RecipeCard";
@@ -48,7 +49,8 @@ export default function V2HomePage() {
           Gelato Museum
         </h1>
         <p className="text-lg max-w-xl mx-auto leading-relaxed mb-8" style={{ color: "var(--ink-light)" }}>
-          A curated collection of authentic Italian gelato recipes — from sun-drenched Sicily to the hills of Piedmont.
+          A curated collection of authentic Italian gelato recipes by chef{" "}
+          <Link href="/v2/chef" className="underline underline-offset-2 transition-colors duration-150 hover:opacity-70" style={{ color: "var(--mint-dark)" }}>Fran&ccedil;ois</Link>
         </p>
         <form onSubmit={handleSearch} className="flex gap-2 max-w-md mx-auto">
           <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}

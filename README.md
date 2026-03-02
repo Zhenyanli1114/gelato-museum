@@ -9,6 +9,7 @@ A curated collection of authentic Italian gelato recipes — beautifully present
 ## Features
 
 - **12 authentic gelato recipes** from pistachio di Bronte to limone sorbetto
+- **Chef François** — introduction page for the fictional chef-owner with portrait, credentials, and biography
 - **Origins map** — interactive Italy SVG with floating recipe cards pinned to their home regions
 - **AI Flavor Finder** — describe your cravings, get matched recipes (OpenAI gpt-4o-mini, rule-based fallback)
 - **Review & Rating system** — persisted via localStorage
@@ -40,6 +41,7 @@ A curated collection of authentic Italian gelato recipes — beautifully present
 | `/v2/browse` | Filter panel, sort dropdown, recipe grid |
 | `/v2/search?q=mint` | Full-text search results |
 | `/v2/origins` | Interactive Italy map with floating origin cards |
+| `/v2/chef` | Chef François — portrait, credentials, biography, and quote |
 | `/v2/recipe/[id]` | Recipe detail — image, ingredients, steps, rating, favorite |
 | `/v2/recipe/[id]/reviews` | Review form + list of reviews |
 | `/v2/ai-finder` | AI Flavor Finder — describe cravings, get 3 matched recommendations |
@@ -135,6 +137,7 @@ GelatoMuseum/
 │   │       ├── browse/
 │   │       ├── search/
 │   │       ├── origins/            # Italy map + floating origin cards
+│   │       ├── chef/               # Chef François introduction page
 │   │       ├── recipe/[id]/
 │   │       └── ai-finder/
 │   ├── components/
@@ -144,6 +147,7 @@ GelatoMuseum/
 │   │   └── v2/                     # Isolated v2 components
 │   │       ├── ItalyMap.tsx        # Inline SVG React component (144 paths)
 │   │       ├── OriginCard.tsx      # Floating map pin cards
+│   │       ├── CredentialChip.tsx  # Chef credentials badge
 │   │       ├── RecipeCard.tsx
 │   │       ├── TagChip.tsx
 │   │       └── ...
@@ -154,6 +158,8 @@ GelatoMuseum/
 │       └── aiFinder.ts             # Rule-based flavor matcher (fallback)
 ├── public/
 │   ├── gelato/                     # 12 recipe images (PNG, ~1.7MB each)
+│   ├── chef/
+│   │   └── chef-francois.jpg       # Chef portrait
 │   └── map/
 │       └── italy-watercolor-bg.png # Watercolor hero background
 ├── next.config.mjs

@@ -14,6 +14,7 @@ export default function Navbar() {
     { href: base, label: "Home" },
     { href: `${base}/browse`, label: "Browse" },
     ...(version === "v2" ? [{ href: `${base}/origins`, label: "Origins" }] : []),
+    ...(version === "v2" ? [{ href: `${base}/chef`, label: "Chef" }] : []),
     { href: `${base}/ai-finder`, label: "AI Finder" },
   ];
 
@@ -46,8 +47,8 @@ export default function Navbar() {
                 href={link.href}
                 className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150"
                 style={{
-                  color: isActive ? "var(--mint-dark)" : "var(--ink-light)",
-                  backgroundColor: isActive ? "var(--mint-light)" : "transparent",
+                  color: isActive ? "var(--ink)" : "var(--ink-light)",
+                  backgroundColor: isActive ? "var(--mint)" : "transparent",
                   fontWeight: isActive ? "600" : "500",
                 }}
               >
