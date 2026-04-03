@@ -7,7 +7,7 @@ import Link from "next/link";
 import { getRecipeById } from "@/data/recipes";
 import TagChip from "@/components/v2/TagChip";
 import RatingStars from "@/components/v2/RatingStars";
-import { seedReviewsIfNeeded, isFavorite, toggleFavorite, getAverageRating } from "@/lib/localStorage";
+import { seedReviewsIfNeeded, isFavorite, toggleFavorite, getAverageRating } from "@/lib/supabase-store";
 
 const difficultyColor: Record<string, string> = { Easy: "#0d9488", Medium: "#b45309", Hard: "#b91c1c" };
 
@@ -20,10 +20,13 @@ export default function V2RecipePage() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    seedReviewsIfNeeded();
-    setIsClient(true);
-    setFavorited(isFavorite(id));
-    setAvgRating(getAverageRating(id));
+    async function load() {
+      await seedReviewsIfNeeded();
+      setIsClient(true);
+      setFavorited(await isFavorite(id));
+      setAvgRating(await getAverageRating(id));
+    }
+    load();
   }, [id]);
 
   if (!recipe) {
@@ -75,7 +78,7 @@ export default function V2RecipePage() {
             </div>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <button type="button" onClick={isClient ? () => setFavorited(toggleFavorite(id)) : undefined}
+            <button type="button" onClick={isClient ? async () => setFavorited(await toggleFavorite(id)) : undefined}
               className="museum-btn-outline flex items-center gap-2"
               style={favorited ? { borderColor: "#e11d48", color: "#e11d48", backgroundColor: "#fff1f2" } : {}}>
               {favorited ? "♥ Saved" : "♡ Save Recipe"}

@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { recipes, filterRecipes, Difficulty } from "@/data/recipes";
 import RecipeCard from "@/components/v2/RecipeCard";
 import FilterBar, { FilterState } from "@/components/v2/FilterBar";
-import { getAverageRating, seedReviewsIfNeeded } from "@/lib/localStorage";
+import { getAverageRating, seedReviewsIfNeeded } from "@/lib/supabase-store";
 
 const defaultFilters: FilterState = { tags: [], difficulty: "", maxTime: 0, sort: "name" };
 
@@ -14,10 +14,13 @@ export default function V2BrowsePage() {
   const [ratings, setRatings] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    seedReviewsIfNeeded();
-    const r: Record<string, number> = {};
-    recipes.forEach((rec) => { r[rec.id] = getAverageRating(rec.id); });
-    setRatings(r);
+    async function load() {
+      await seedReviewsIfNeeded();
+      const r: Record<string, number> = {};
+      await Promise.all(recipes.map(async (rec) => { r[rec.id] = await getAverageRating(rec.id); }));
+      setRatings(r);
+    }
+    load();
   }, []);
 
   const filtered = useMemo(() => {

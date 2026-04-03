@@ -7,7 +7,7 @@ import { recipes } from "@/data/recipes";
 import { ALL_TAGS } from "@/data/recipes";
 import RecipeCard from "@/components/v2/RecipeCard";
 import TagChip from "@/components/v2/TagChip";
-import { getAverageRating, seedReviewsIfNeeded } from "@/lib/localStorage";
+import { getAverageRating, seedReviewsIfNeeded } from "@/lib/supabase-store";
 
 const FEATURED_IDS = [
   "pistachio-di-bronte",
@@ -25,10 +25,13 @@ export default function V2HomePage() {
   const [ratings, setRatings] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    seedReviewsIfNeeded();
-    const r: Record<string, number> = {};
-    recipes.forEach((rec) => { r[rec.id] = getAverageRating(rec.id); });
-    setRatings(r);
+    async function load() {
+      await seedReviewsIfNeeded();
+      const r: Record<string, number> = {};
+      await Promise.all(recipes.map(async (rec) => { r[rec.id] = await getAverageRating(rec.id); }));
+      setRatings(r);
+    }
+    load();
   }, []);
 
   function handleSearch(e: React.FormEvent) {

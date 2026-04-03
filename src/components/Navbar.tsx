@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SignInButton, Show, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -77,6 +78,25 @@ export default function Navbar() {
               </Link>
             ))}
           </div>
+
+          {/* Auth — v2 only */}
+          {version === "v2" && (
+            <div className="ml-3 flex items-center">
+              <Show when="signed-out">
+                <SignInButton mode="modal">
+                  <button
+                    className="px-4 py-1.5 text-sm font-medium rounded-lg transition-all duration-150"
+                    style={{ backgroundColor: "var(--mint)", color: "var(--ink)" }}
+                  >
+                    Sign In
+                  </button>
+                </SignInButton>
+              </Show>
+              <Show when="signed-in">
+                <UserButton />
+              </Show>
+            </div>
+          )}
         </div>
       </nav>
     </header>

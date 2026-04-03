@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Lato } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -29,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${lato.variable}`}>
       <body className="paper-texture min-h-screen flex flex-col">
-        {children}
+        <ClerkProvider>{children}</ClerkProvider>
       </body>
     </html>
   );

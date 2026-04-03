@@ -5,7 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { getRecipeById } from "@/data/recipes";
 import TagChip from "@/components/v2/TagChip";
-import { getAiHistory, addAiHistory, seedReviewsIfNeeded } from "@/lib/localStorage";
+import { getAiHistory, addAiHistory } from "@/lib/localStorage";
+import { seedReviewsIfNeeded } from "@/lib/supabase-store";
 
 interface Recommendation {
   id: string;
@@ -36,9 +37,12 @@ export default function V2AiFinderPage() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    seedReviewsIfNeeded();
-    setIsClient(true);
-    setHistory(getAiHistory());
+    async function load() {
+      await seedReviewsIfNeeded();
+      setIsClient(true);
+      setHistory(getAiHistory());
+    }
+    load();
   }, []);
 
   async function handleSearch(query: string) {

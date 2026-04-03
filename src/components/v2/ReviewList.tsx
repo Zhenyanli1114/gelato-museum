@@ -1,6 +1,6 @@
 "use client";
 
-import { Review } from "@/lib/localStorage";
+import { Review } from "@/lib/supabase-store";
 import RatingStars from "@/components/v2/RatingStars";
 
 interface ReviewListProps {
@@ -33,6 +33,9 @@ export default function ReviewList({ reviews }: ReviewListProps) {
             <RatingStars value={review.rating} size="sm" />
             <time className="text-xs flex-shrink-0" style={{ color: "var(--ink-muted)" }}>{formatDate(review.createdAt)}</time>
           </div>
+          {review.userName && (
+            <p className="text-xs font-medium mb-2" style={{ color: "var(--ink-muted)" }}>— {review.userName}</p>
+          )}
           <p className="text-sm leading-relaxed" style={{ color: "var(--ink-light)" }}>{review.text}</p>
         </article>
       ))}

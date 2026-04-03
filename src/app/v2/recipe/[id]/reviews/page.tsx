@@ -7,27 +7,33 @@ import { getRecipeById } from "@/data/recipes";
 import ReviewForm from "@/components/v2/ReviewForm";
 import ReviewList from "@/components/v2/ReviewList";
 import RatingStars from "@/components/v2/RatingStars";
-import { Review, getReviews, addReview, getAverageRating, seedReviewsIfNeeded } from "@/lib/localStorage";
+import { Review, getReviews, addReview, getAverageRating, seedReviewsIfNeeded } from "@/lib/supabase-store";
+import { useUser } from "@clerk/nextjs";
 
 export default function V2ReviewsPage() {
   const params = useParams();
   const id = params.id as string;
   const recipe = getRecipeById(id);
+  const { user } = useUser();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [avgRating, setAvgRating] = useState(0);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    seedReviewsIfNeeded();
-    setIsClient(true);
-    setReviews(getReviews(id));
-    setAvgRating(getAverageRating(id));
+    async function load() {
+      await seedReviewsIfNeeded();
+      setIsClient(true);
+      setReviews(await getReviews(id));
+      setAvgRating(await getAverageRating(id));
+    }
+    load();
   }, [id]);
 
-  function handleSubmit(rating: number, text: string) {
-    addReview(id, { rating, text, createdAt: new Date().toISOString() });
-    setReviews(getReviews(id));
-    setAvgRating(getAverageRating(id));
+  async function handleSubmit(rating: number, text: string) {
+    const userName = user?.fullName ?? user?.firstName ?? null;
+    await addReview(id, { rating, text, createdAt: new Date().toISOString(), userName });
+    setReviews(await getReviews(id));
+    setAvgRating(await getAverageRating(id));
   }
 
   if (!recipe) {

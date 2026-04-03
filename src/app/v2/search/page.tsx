@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
 import { searchRecipes, Recipe } from "@/data/recipes";
 import RecipeCard from "@/components/v2/RecipeCard";
-import { getAverageRating, seedReviewsIfNeeded } from "@/lib/localStorage";
+import { getAverageRating, seedReviewsIfNeeded } from "@/lib/supabase-store";
 
 function SearchResults() {
   const searchParams = useSearchParams();
@@ -14,13 +14,16 @@ function SearchResults() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    seedReviewsIfNeeded();
-    setIsClient(true);
-    const found = searchRecipes(query);
-    setResults(found);
-    const r: Record<string, number> = {};
-    found.forEach((rec) => { r[rec.id] = getAverageRating(rec.id); });
-    setRatings(r);
+    async function load() {
+      await seedReviewsIfNeeded();
+      setIsClient(true);
+      const found = searchRecipes(query);
+      setResults(found);
+      const r: Record<string, number> = {};
+      await Promise.all(found.map(async (rec) => { r[rec.id] = await getAverageRating(rec.id); }));
+      setRatings(r);
+    }
+    load();
   }, [query]);
 
   if (!isClient) return null;
