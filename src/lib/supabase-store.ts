@@ -150,3 +150,57 @@ export async function getAverageRating(recipeId: string): Promise<number> {
   const sum = data.reduce((acc, r) => acc + r.rating, 0);
   return Math.round((sum / data.length) * 10) / 10;
 }
+
+// ─── Custom Recipes ───────────────────────────────────────────────────────────
+export interface CustomRecipe {
+  id: string;
+  name: string;
+  shortDescription: string;
+  imageUrl: string;
+  tags: string[];
+  timeMin: number;
+  difficulty: string;
+  ingredients: string[];
+  steps: string[];
+  createdAt: string;
+}
+
+export async function getCustomRecipes(): Promise<CustomRecipe[]> {
+  const userId = getUserId();
+  const { data } = await supabase
+    .from("custom_recipes")
+    .select("*")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+  return (data ?? []).map((r) => ({
+    id: r.id,
+    name: r.name,
+    shortDescription: r.short_description,
+    imageUrl: r.image_url,
+    tags: r.tags,
+    timeMin: r.time_min,
+    difficulty: r.difficulty,
+    ingredients: r.ingredients,
+    steps: r.steps,
+    createdAt: r.created_at,
+  }));
+}
+
+export async function saveCustomRecipe(recipe: Omit<CustomRecipe, "id" | "createdAt">): Promise<void> {
+  const userId = getUserId();
+  await supabase.from("custom_recipes").insert({
+    user_id: userId,
+    name: recipe.name,
+    short_description: recipe.shortDescription,
+    image_url: recipe.imageUrl,
+    tags: recipe.tags,
+    time_min: recipe.timeMin,
+    difficulty: recipe.difficulty,
+    ingredients: recipe.ingredients,
+    steps: recipe.steps,
+  });
+}
+
+export async function deleteCustomRecipe(id: string): Promise<void> {
+  await supabase.from("custom_recipes").delete().eq("id", id);
+}

@@ -17,6 +17,8 @@ export default function Navbar() {
     ...(version === "v2" ? [{ href: `${base}/origins`, label: "Origins" }] : []),
     ...(version === "v2" ? [{ href: `${base}/chef`, label: "Chef" }] : []),
     { href: `${base}/ai-finder`, label: "AI Finder" },
+    ...(version === "v2" ? [{ href: `${base}/create`, label: "Create" }] : []),
+    ...(version === "v2" ? [{ href: `${base}/saved`, label: "Saved" }] : []),
   ];
 
   return (
