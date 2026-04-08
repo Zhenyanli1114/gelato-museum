@@ -103,7 +103,7 @@ export async function POST(req: NextRequest) {
       quality: "standard",
     });
 
-    const tempUrl = imageResponse.data[0]?.url;
+    const tempUrl = imageResponse.data?.[0]?.url;
     if (!tempUrl) throw new Error("No image URL returned from DALL-E");
 
     // ── Step 3: Upload to Supabase Storage for permanent URL ─────────────────
