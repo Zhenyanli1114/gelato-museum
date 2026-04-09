@@ -119,6 +119,34 @@ export default function CreatePage() {
         <p className="text-xs text-center mt-2" style={{ color: "var(--ink-muted)" }}>Takes ~15 seconds · uses DALL·E 3</p>
       </div>
 
+      {/* Loading Skeleton */}
+      {isGenerating && (
+        <div className="mb-8 rounded-2xl overflow-hidden animate-pulse" style={{ border: "1px solid var(--border)" }}>
+          <div className="w-full aspect-[4/3]" style={{ backgroundColor: "var(--border)" }} />
+          <div className="p-6" style={{ backgroundColor: "var(--bg-card)" }}>
+            <div className="h-7 w-2/3 rounded-lg mb-3" style={{ backgroundColor: "var(--border)" }} />
+            <div className="h-4 w-full rounded mb-1.5" style={{ backgroundColor: "var(--border)" }} />
+            <div className="h-4 w-4/5 rounded mb-4" style={{ backgroundColor: "var(--border)" }} />
+            <div className="flex gap-2 mb-6">
+              {[1, 2, 3].map((i) => <div key={i} className="h-5 w-16 rounded-full" style={{ backgroundColor: "var(--border)" }} />)}
+            </div>
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <div className="h-5 w-24 rounded mb-3" style={{ backgroundColor: "var(--border)" }} />
+                {[1, 2, 3, 4, 5].map((i) => <div key={i} className="h-3 rounded" style={{ backgroundColor: "var(--border)", width: `${70 + i * 5}%` }} />)}
+              </div>
+              <div className="space-y-2">
+                <div className="h-5 w-16 rounded mb-3" style={{ backgroundColor: "var(--border)" }} />
+                {[1, 2, 3, 4].map((i) => <div key={i} className="h-3 rounded" style={{ backgroundColor: "var(--border)", width: `${65 + i * 7}%` }} />)}
+              </div>
+            </div>
+            <p className="text-xs mt-6 text-center" style={{ color: "var(--ink-muted)" }}>
+              Generating recipe and watercolor illustration…
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Error */}
       {error && (
         <div className="mb-6 p-4 rounded-xl text-sm" style={{ backgroundColor: "#fee2e2", color: "#b91c1c" }}>

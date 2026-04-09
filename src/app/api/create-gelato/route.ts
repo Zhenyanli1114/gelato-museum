@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
   try {
     const imageResponse = await client.images.generate({
       model: "dall-e-3",
-      prompt: `Artisan Italian gelato called "${recipe.name}". ${recipe.shortDescription}. Overhead shot in a glass gelato cup on a white marble surface, soft natural daylight, elegant food photography, pastel tones, gelato museum aesthetic.`,
+      prompt: `Watercolor illustration of a single scoop of artisan Italian gelato called "${recipe.name}" served in a waffle cone. ${recipe.shortDescription}. Soft hand-painted watercolor style, light cream off-white background, delicate brushstrokes, no text, no labels, centered composition, fine art illustration.`,
       n: 1,
       size: "1024x1024",
       quality: "standard",
