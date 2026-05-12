@@ -18,7 +18,6 @@ export default function RatingStars({
   size = "md",
 }: RatingStarsProps) {
   const [hovered, setHovered] = useState(0);
-
   const sizeClass = size === "sm" ? "text-sm" : size === "lg" ? "text-2xl" : "text-lg";
 
   return (
@@ -26,7 +25,6 @@ export default function RatingStars({
       {Array.from({ length: max }, (_, i) => {
         const starValue = i + 1;
         const isFilled = starValue <= (hovered || value);
-
         return (
           <button
             key={i}
@@ -35,28 +33,16 @@ export default function RatingStars({
             onClick={() => interactive && onChange?.(starValue)}
             onMouseEnter={() => interactive && setHovered(starValue)}
             onMouseLeave={() => interactive && setHovered(0)}
-            className={`transition-transform duration-100 ${
-              interactive ? "cursor-pointer hover:scale-110" : "cursor-default"
-            }`}
+            className={`transition-transform duration-100 ${interactive ? "cursor-pointer hover:scale-110" : "cursor-default"}`}
             aria-label={`${starValue} star${starValue > 1 ? "s" : ""}`}
             style={{ background: "none", border: "none", padding: "0 1px" }}
           >
-            <span
-              style={{
-                color: isFilled ? "#f59e0b" : "var(--border)",
-                transition: "color 0.15s ease",
-              }}
-            >
-              ★
-            </span>
+            <span style={{ color: isFilled ? "#f59e0b" : "var(--border)", transition: "color 0.15s ease" }}>★</span>
           </button>
         );
       })}
       {value > 0 && (
-        <span
-          className="ml-1.5 text-xs font-medium"
-          style={{ color: "var(--ink-muted)" }}
-        >
+        <span className="ml-1.5 text-xs font-medium" style={{ color: "var(--ink-muted)" }}>
           {value.toFixed(1)}
         </span>
       )}

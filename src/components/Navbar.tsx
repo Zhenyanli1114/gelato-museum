@@ -4,22 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SignInButton, Show, UserButton } from "@clerk/nextjs";
 
+const NAV_LINKS = [
+  { href: "/", label: "Home" },
+  { href: "/browse", label: "Browse" },
+  { href: "/origins", label: "Origins" },
+  { href: "/chef", label: "Chef" },
+  { href: "/ai-finder", label: "AI Finder" },
+  { href: "/create", label: "Create" },
+  { href: "/saved", label: "Saved" },
+];
+
 export default function Navbar() {
   const pathname = usePathname();
-
-  // Detect which version we're in
-  const version = pathname.startsWith("/v2") ? "v2" : "v1";
-  const base = `/${version}`;
-
-  const navLinks = [
-    { href: base, label: "Home" },
-    { href: `${base}/browse`, label: "Browse" },
-    ...(version === "v2" ? [{ href: `${base}/origins`, label: "Origins" }] : []),
-    ...(version === "v2" ? [{ href: `${base}/chef`, label: "Chef" }] : []),
-    { href: `${base}/ai-finder`, label: "AI Finder" },
-    ...(version === "v2" ? [{ href: `${base}/create`, label: "Create" }] : []),
-    ...(version === "v2" ? [{ href: `${base}/saved`, label: "Saved" }] : []),
-  ];
 
   return (
     <header
@@ -28,7 +24,7 @@ export default function Navbar() {
     >
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
         {/* Logo */}
-        <Link href={base} className="flex items-center gap-2 group">
+        <Link href="/" className="flex items-center gap-2 group">
           <span
             className="text-2xl font-serif font-bold tracking-tight group-hover:text-teal-600 transition-colors duration-200"
             style={{ color: "var(--ink)" }}
@@ -39,11 +35,8 @@ export default function Navbar() {
 
         <div className="flex items-center gap-1">
           {/* Nav Links */}
-          {navLinks.map((link) => {
-            const isActive =
-              link.href === base
-                ? pathname === base
-                : pathname.startsWith(link.href);
+          {NAV_LINKS.map((link) => {
+            const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
             return (
               <Link
                 key={link.href}
@@ -60,45 +53,22 @@ export default function Navbar() {
             );
           })}
 
-          {/* Version Switcher */}
-          <div
-            className="ml-4 flex items-center rounded-lg overflow-hidden"
-            style={{ border: "1px solid var(--border)" }}
-          >
-            {(["v1", "v2"] as const).map((v) => (
-              <Link
-                key={v}
-                href={`/${v}`}
-                className="px-3 py-1.5 text-xs font-bold tracking-wider transition-all duration-150"
-                style={{
-                  backgroundColor: version === v ? "var(--mint)" : "var(--bg-card)",
-                  color: version === v ? "var(--ink)" : "var(--ink-muted)",
-                  borderRight: v === "v1" ? "1px solid var(--border)" : "none",
-                }}
-              >
-                {v.toUpperCase()}
-              </Link>
-            ))}
+          {/* Auth */}
+          <div className="ml-3 flex items-center">
+            <Show when="signed-out">
+              <SignInButton mode="modal">
+                <button
+                  className="px-4 py-1.5 text-sm font-medium rounded-lg transition-all duration-150"
+                  style={{ backgroundColor: "var(--mint)", color: "var(--ink)" }}
+                >
+                  Sign In
+                </button>
+              </SignInButton>
+            </Show>
+            <Show when="signed-in">
+              <UserButton />
+            </Show>
           </div>
-
-          {/* Auth — v2 only */}
-          {version === "v2" && (
-            <div className="ml-3 flex items-center">
-              <Show when="signed-out">
-                <SignInButton mode="modal">
-                  <button
-                    className="px-4 py-1.5 text-sm font-medium rounded-lg transition-all duration-150"
-                    style={{ backgroundColor: "var(--mint)", color: "var(--ink)" }}
-                  >
-                    Sign In
-                  </button>
-                </SignInButton>
-              </Show>
-              <Show when="signed-in">
-                <UserButton />
-              </Show>
-            </div>
-          )}
         </div>
       </nav>
     </header>

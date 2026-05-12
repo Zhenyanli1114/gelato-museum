@@ -65,7 +65,7 @@ export default function OriginCard({
             {shortDescription}
           </p>
           <Link
-            href={`/v2/recipe/${recipeId}`}
+            href={`/recipe/${recipeId}`}
             className="text-[10px] font-medium transition-colors duration-150"
             style={{ color: "#0d9488" }}
           >

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getFavorites, getAverageRating } from "@/lib/supabase-store";
 import { getRecipeById, Recipe } from "@/data/recipes";
-import RecipeCard from "@/components/v2/RecipeCard";
+import RecipeCard from "@/components/RecipeCard";
 
 export default function SavedPage() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -43,7 +43,7 @@ export default function SavedPage() {
           <p className="text-5xl mb-4">🍦</p>
           <p className="font-serif text-xl mb-2" style={{ color: "var(--ink)" }}>No saved recipes yet</p>
           <p className="text-sm mb-6" style={{ color: "var(--ink-muted)" }}>Browse recipes and tap the bookmark icon to save them here.</p>
-          <Link href="/v2/browse"
+          <Link href="/browse"
             className="px-5 py-2 rounded-lg text-sm font-medium transition-colors"
             style={{ backgroundColor: "var(--mint)", color: "var(--ink)" }}>
             Browse Recipes

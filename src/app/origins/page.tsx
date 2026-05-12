@@ -1,7 +1,52 @@
 import Image from "next/image";
-import ItalyMap from "@/components/v2/ItalyMap";
-import OriginCard from "@/components/v2/OriginCard";
+import Link from "next/link";
+import ItalyMap from "@/components/ItalyMap";
+import OriginCard from "@/components/OriginCard";
 import { getRecipeById } from "@/data/recipes";
+
+/* ─── Regional gallery data: 5 rooms, all 12 recipes ─── */
+const REGIONS = [
+  {
+    room: "Room I",
+    name: "Sicily",
+    accentColor: "#0d9488",
+    heritage:
+      "The volcanic slopes of Etna produce the Bronte pistachio — an ingredient so prized it carries EU PDO protection. Sicily's citrus groves and ancient Modica chocolate tradition have shaped Italian frozen desserts since the 16th century.",
+    recipeIds: ["pistachio-di-bronte", "limone", "cioccolato-fondente"],
+  },
+  {
+    room: "Room II",
+    name: "Piedmont",
+    accentColor: "#0f766e",
+    heritage:
+      "The Langhe hills are home to the Tonda Gentile hazelnut, also EU-protected, whose deep toasted richness defines nocciola gelato. In Piedmont, a scoop of nocciola is not a flavour — it is a statement of terroir.",
+    recipeIds: ["nocciola"],
+  },
+  {
+    room: "Room III",
+    name: "Lombardy & Emilia-Romagna",
+    accentColor: "#14b8a6",
+    heritage:
+      "Stracciatella was invented in Bergamo in 1961 when an artisan drizzled melted chocolate into a spinning machine, creating gelato's first 'chipped' texture. Bologna's Fabbri family gave the world the amarena cherry preserved in syrup — a staple topping since 1905.",
+    recipeIds: ["stracciatella", "amarena"],
+  },
+  {
+    room: "Room IV",
+    name: "Veneto",
+    accentColor: "#2dd4bf",
+    heritage:
+      "Treviso lays claim to tiramisu's invention in the kitchens of Le Beccherie in the 1960s. Mascarpone, espresso, and savoiardi became a flavour so beloved it crossed every border and became Italy's most imitated dessert.",
+    recipeIds: ["tiramisu"],
+  },
+  {
+    room: "Room V",
+    name: "Campania",
+    accentColor: "#4DB6AC",
+    heritage:
+      "Naples elevated espresso to a civic institution and brought that obsession into the gelateria. Fior di latte — pure, milky, unadorned — is the canonical Neapolitan base. Campania's summer melons and wild mint complete a pantry shaped by sun and volcanic soil.",
+    recipeIds: ["caffe-espresso", "fior-di-latte", "fragola", "melone", "menta"],
+  },
+];
 
 /* ─── Pin data: 4 cards across northern + central Italy ─── */
 const ORIGIN_PINS = [
@@ -170,11 +215,78 @@ export default function OriginsPage() {
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-widest mb-0.5" style={{ color: "#4DB6AC" }}>{pin.region}</p>
                   <p className="font-serif text-base font-semibold mb-1" style={{ color: "#2c2c2c" }}>{recipe.name}</p>
-                  <a href={`/v2/recipe/${recipe.id}`} className="text-xs font-medium" style={{ color: "#0d9488" }}>View Recipe →</a>
+                  <a href={`/recipe/${recipe.id}`} className="text-xs font-medium" style={{ color: "#0d9488" }}>View Recipe →</a>
                 </div>
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* ── Regional Gallery ── */}
+      <section className="py-16 px-4" style={{ borderTop: "1px solid var(--border)" }}>
+        <div className="max-w-6xl mx-auto">
+
+          {/* Header */}
+          <div className="text-center mb-12">
+            <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-3" style={{ color: "#4DB6AC" }}>
+              The Regional Gallery
+            </p>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold" style={{ color: "var(--ink)" }}>
+              Five Rooms, Five Terroirs
+            </h2>
+            <div className="w-16 h-px mt-4 mx-auto" style={{ backgroundColor: "#4DB6AC", opacity: 0.5 }} />
+          </div>
+
+          {/* Cards grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {REGIONS.map((region) => {
+              const recipeData = region.recipeIds
+                .map((id) => getRecipeById(id))
+                .filter((r): r is NonNullable<typeof r> => !!r);
+
+              return (
+                <article
+                  key={region.name}
+                  className={`relative rounded-2xl overflow-hidden flex ${region.name === "Campania" ? "md:col-span-2" : ""}`}
+                  style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border)" }}
+                >
+                  {/* Left accent bar */}
+                  <div className="flex-shrink-0 w-1.5" style={{ backgroundColor: region.accentColor }} />
+
+                  <div className="flex-1 p-6">
+                    <p className="text-xs uppercase tracking-[0.18em] font-semibold mb-1" style={{ color: region.accentColor }}>
+                      {region.room}
+                    </p>
+                    <h3 className="font-serif text-2xl md:text-3xl font-bold mb-3" style={{ color: "var(--ink)" }}>
+                      {region.name}
+                    </h3>
+                    <div className="w-10 h-px mb-4" style={{ backgroundColor: region.accentColor, opacity: 0.5 }} />
+                    <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--ink-light)" }}>
+                      {region.heritage}
+                    </p>
+
+                    {/* Recipe thumbnails */}
+                    <div className="flex flex-wrap gap-3">
+                      {recipeData.map((recipe) => (
+                        <Link key={recipe.id} href={`/recipe/${recipe.id}`} className="group" title={recipe.name}>
+                          <div
+                            className="relative w-14 h-14 rounded-lg overflow-hidden ring-1 ring-transparent group-hover:ring-2 group-hover:ring-teal-600 group-hover:scale-105 transition-all duration-200"
+                            style={{ border: "1px solid var(--border)" }}
+                          >
+                            <Image src={recipe.imagePath} alt={recipe.name} fill className="object-cover" sizes="56px" />
+                          </div>
+                          <p className="text-[9px] text-center mt-1 max-w-[56px] leading-snug truncate" style={{ color: "var(--ink-muted)" }}>
+                            {recipe.name}
+                          </p>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -196,7 +308,7 @@ export default function OriginsPage() {
             Amarena cherries hail from Bologna. Gelato is edible geography.
           </p>
           <a
-            href="/v2/browse"
+            href="/browse"
             className="museum-btn-primary inline-block"
           >
             Browse All Recipes →

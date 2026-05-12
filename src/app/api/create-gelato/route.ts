@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import OpenAI from "openai";
+import OpenAI, { toFile } from "openai";
+import { File as NodeFile } from "node:buffer";
+if (!globalThis.File) (globalThis as unknown as Record<string, unknown>).File = NodeFile;
 import { createClient } from "@supabase/supabase-js";
+import fs from "fs";
+import path from "path";
 
 // ─── Rate limiter (1 req / 15 sec per IP — DALL-E is expensive) ───────────────
 const lastRequestTime = new Map<string, number>();
@@ -92,27 +96,30 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Failed to generate recipe. Please try again." }, { status: 500 });
   }
 
-  // ── Step 2: Generate image with DALL-E 3 ──────────────────────────────────
+  // ── Step 2: Generate image with gpt-image-1 using reference image ────────
   let imageUrl: string;
   try {
-    const imageResponse = await client.images.generate({
-      model: "dall-e-3",
-      prompt: `Watercolor illustration of a single scoop of artisan Italian gelato called "${recipe.name}" served in a waffle cone. ${recipe.shortDescription}. Soft hand-painted watercolor style, light cream off-white background, delicate brushstrokes, no text, no labels, centered composition, fine art illustration.`,
+    const refPath = path.join(process.cwd(), "public/gelato/pistachio-di-bronte.png");
+
+    const imageFile = await toFile(fs.createReadStream(refPath), "reference.png", { type: "image/png" });
+
+    const imageResponse = await client.images.edit({
+      model: "gpt-image-1",
+      image: imageFile,
+      prompt: `A single scoop of artisan gelato called "${recipe.name}" in a waffle cone, illustrated in exactly the same style as the reference image. ${recipe.shortDescription}. Same colored-pencil and watercolor technique, same fine outlines, same off-white cream background, isolated centered subject, no text, no labels, no shadows.`,
       n: 1,
       size: "1024x1024",
-      quality: "standard",
     });
 
-    const tempUrl = imageResponse.data?.[0]?.url;
-    if (!tempUrl) throw new Error("No image URL returned from DALL-E");
+    // gpt-image-1 returns base64 directly (no temporary URL)
+    const b64 = imageResponse.data?.[0]?.b64_json;
+    if (!b64) throw new Error("No image data returned from gpt-image-1");
+    const imgBuffer = Buffer.from(b64, "base64");
 
     // ── Step 3: Upload to Supabase Storage for permanent URL ─────────────────
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
     const supabase = createClient(supabaseUrl, supabaseKey);
-
-    const imgRes = await fetch(tempUrl);
-    const imgBuffer = await imgRes.arrayBuffer();
     const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.png`;
 
     const { error: uploadError } = await supabase.storage

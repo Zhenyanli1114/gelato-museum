@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { CustomRecipe, getCustomRecipes, saveCustomRecipe, deleteCustomRecipe } from "@/lib/supabase-store";
-import TagChip from "@/components/v2/TagChip";
+import TagChip from "@/components/TagChip";
 
 interface GeneratedRecipe {
   name: string;
@@ -116,13 +116,36 @@ export default function CreatePage() {
           }}>
           {isGenerating ? "✨ Crafting your gelato…" : "Generate Gelato"}
         </button>
-        <p className="text-xs text-center mt-2" style={{ color: "var(--ink-muted)" }}>Takes ~15 seconds · uses DALL·E 3</p>
+        <p className="text-xs text-center mt-2" style={{ color: "var(--ink-muted)" }}>Takes ~20 seconds · uses gpt-image-1</p>
       </div>
 
       {/* Loading Skeleton */}
       {isGenerating && (
         <div className="mb-8 rounded-2xl overflow-hidden animate-pulse" style={{ border: "1px solid var(--border)" }}>
-          <div className="w-full aspect-[4/3]" style={{ backgroundColor: "var(--border)" }} />
+          {/* Animated image placeholder */}
+          <div className="w-full aspect-[4/3] relative flex items-center justify-center overflow-hidden"
+            style={{ backgroundColor: "var(--mint-light)" }}>
+            {/* Shimmer sweep */}
+            <div className="absolute inset-0"
+              style={{
+                background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.55) 50%, transparent 60%)",
+                backgroundSize: "200% 100%",
+                animation: "shimmer 1.6s infinite linear",
+              }} />
+            {/* Spinning gelato icon */}
+            <div className="relative flex flex-col items-center gap-3">
+              <span className="text-5xl" style={{ animation: "spin 2s linear infinite", display: "inline-block" }}>🍦</span>
+              <p className="text-xs font-medium tracking-wide" style={{ color: "var(--mint-dark)" }}>
+                Painting your illustration…
+              </p>
+            </div>
+          </div>
+
+          <style>{`
+            @keyframes shimmer { from { background-position: -200% 0 } to { background-position: 200% 0 } }
+            @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
+          `}</style>
+
           <div className="p-6" style={{ backgroundColor: "var(--bg-card)" }}>
             <div className="h-7 w-2/3 rounded-lg mb-3" style={{ backgroundColor: "var(--border)" }} />
             <div className="h-4 w-full rounded mb-1.5" style={{ backgroundColor: "var(--border)" }} />
@@ -141,7 +164,7 @@ export default function CreatePage() {
               </div>
             </div>
             <p className="text-xs mt-6 text-center" style={{ color: "var(--ink-muted)" }}>
-              Generating recipe and watercolor illustration…
+              Generating recipe and illustration…
             </p>
           </div>
         </div>

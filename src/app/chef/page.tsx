@@ -1,5 +1,5 @@
 import Link from "next/link";
-import CredentialChip from "@/components/v2/CredentialChip";
+import CredentialChip from "@/components/CredentialChip";
 
 const CREDENTIALS = [
   "Milan",
@@ -115,10 +115,10 @@ export default function ChefPage() {
 
             {/* CTAs */}
             <div className="flex flex-wrap gap-3">
-              <Link href="/v2/origins" className="museum-btn-primary">
+              <Link href="/origins" className="museum-btn-primary">
                 Explore Flavor Origins →
               </Link>
-              <Link href="/v2/ai-finder" className="museum-btn-outline">
+              <Link href="/ai-finder" className="museum-btn-outline">
                 Try AI Flavor Finder →
               </Link>
             </div>
